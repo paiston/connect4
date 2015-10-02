@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect4", "Connect4.csproj", "{D6E3800A-CD9E-488D-B40B-A78896BD852B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{CB11E969-7D94-4089-BFFB-3C859AC28B2C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1CA59EDC-0995-420F-9B32-D9B8E5E3DFFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect4", "Application\Connect4.csproj", "{D6E3800A-CD9E-488D-B40B-A78896BD852B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect4.Tests", "..\Connect4.Tests\Connect4.Tests.csproj", "{296F83CF-B344-4EC1-9F78-5D7861136E3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,16 @@ Global
 		{D6E3800A-CD9E-488D-B40B-A78896BD852B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6E3800A-CD9E-488D-B40B-A78896BD852B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6E3800A-CD9E-488D-B40B-A78896BD852B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{296F83CF-B344-4EC1-9F78-5D7861136E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296F83CF-B344-4EC1-9F78-5D7861136E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{296F83CF-B344-4EC1-9F78-5D7861136E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{296F83CF-B344-4EC1-9F78-5D7861136E3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D6E3800A-CD9E-488D-B40B-A78896BD852B} = {CB11E969-7D94-4089-BFFB-3C859AC28B2C}
+		{296F83CF-B344-4EC1-9F78-5D7861136E3B} = {1CA59EDC-0995-420F-9B32-D9B8E5E3DFFE}
 	EndGlobalSection
 EndGlobal
