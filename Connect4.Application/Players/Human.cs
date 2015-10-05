@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Connect4.Interfaces.Players;
 
 namespace Connect4.Players
 {
-    internal class Human: IPlayer
+    public class Human: IPlayer
     {
-        internal Human()
+        public Human()
         {
         }
 

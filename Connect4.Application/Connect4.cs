@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Connect4.Players;
+using Connect4.Interfaces;
+using Connect4.Interfaces.Players;
 
 namespace Connect4
 {
@@ -11,29 +12,51 @@ namespace Connect4
     /// </summary>
     public class Connect4
     {
-        internal State CurrentState; //Current game state.
+        internal State GameState; //Current game state.
         public bool Winner; //Winner found.
-        internal IPlayer Player1;
-        internal IPlayer Player2;
-
-        public Connect4()
+        public IPlayer Player1;
+        public IPlayer Player2;
+        protected readonly IMessage _Message;
+                
+        /// <summary>
+        /// Initialises a new game with specifed grid size.
+        /// </summary>
+        /// <param name="gridColumns">No. of columns in grid</param>
+        /// <param name="gridRows">No. of rows in grid</param>
+        public Connect4(IBoardSettings boardSettings, IMessage message)
         {
             //Initialise
+            _Message = message;
             Winner = false;
-            CurrentState = new State();
-            CurrentState.Turn = 1;
+            GameState = new State(boardSettings.Columns,boardSettings.Rows);
+            GameState.Turn = 1;
         }
-
+        
         public bool Turn(int move)
         {
-            State state = CurrentState.Move(move);
-            
-            if (state == null)
-                return false;
+            try
+            {
+                State state = GameState.Move(move);
 
-            CurrentState = state;
+                if (state == null)
+                    return false;
 
+                GameState = state;
+            }
+            catch(Exception ex)
+            {
+                _Message.Write(string.Format("Invalid move - {0}", ex.Message));
+            }
             return true;
+        }
+
+        /// <summary>
+        /// Checks the state of the game to see if there is a winning sequence.
+        /// </summary>
+        /// <returns>//0=No Winner; 1=Player1 wins; 2=Player2 wins; -1 = Tie</returns>
+        public int CheckGameStateForWin()
+        {
+            return GameState.CheckWin(); //0=No Winner; 1=Player1 wins; 2=Player2 wins; -1 = Tie
         }
 
         public void PlayGame()
@@ -41,21 +64,21 @@ namespace Connect4
             int w = 0;
             while(!Winner)
             {
-                if (CurrentState.Turn == 1)
-                    Turn(Player1.PlayerTurn(CurrentState));
+                if (GameState.Turn == 1)
+                    Turn(Player1.PlayerTurn(GameState));
                 else
-                    Turn(Player2.PlayerTurn(CurrentState));
+                    Turn(Player2.PlayerTurn(GameState));
 
-                w = CurrentState.CheckWin(); //0=No Winner; 1=Player1 wins; 2=Player2 wins; -1 = Tie
+                w = CheckGameStateForWin();
                 Winner = (w !=0);
 
                 Console.Clear();
-                Console.WriteLine(CurrentState);
+                Console.WriteLine(GameState);
             }
             
             Console.Clear();
             Console.WriteLine(" # # # # # # # # # # # #    CONNECT 4     # # # # # # # # # # # # \n");
-            Console.Write(CurrentState);
+            Console.Write(GameState);
             
             if(w==-1)
                 Console.WriteLine(" ITS A TIE!!!");

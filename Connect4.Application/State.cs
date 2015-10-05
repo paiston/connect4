@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Connect4
 {
-    internal class State
+    public class State
     {
         public int[,] Values;
         public int[] RowCount;
@@ -13,7 +13,8 @@ namespace Connect4
         public int StateValue;
         public int MoveCount;
         public Dictionary<int, State> Successors;
-        public static int Rows = 6;
+        public int Rows = 6;
+        public int Columns = 7;
 
         /// <summary>
         /// New state base on old state
@@ -28,12 +29,27 @@ namespace Connect4
         }
 
         /// <summary>
-        /// New State
+        /// New state with defined Grid size.
+        /// </summary>
+        /// <param name="cols">No. of columns within grid</param>
+        /// <param name="rows">No. of Rows within grid.</param>
+        public State(int cols, int rows)
+        {
+            Rows = rows;
+            Columns = cols;
+
+            Values = new int[Columns, Rows];
+            RowCount = new int[Columns];
+            MoveCount = 0;
+        }
+
+        /// <summary>
+        /// New State with defaulted grid size.
         /// </summary>
         public State()
         {
-            Values = new int[7, 6];
-            RowCount = new int[7];
+            Values = new int[Columns, Rows];
+            RowCount = new int[Columns];
             MoveCount = 0;
         }
 
@@ -47,7 +63,14 @@ namespace Connect4
         public State Move(int iMove)
         {
             State state = new State(this);
+
+            if (iMove < 1 || iMove > Columns)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("Specified column {1} is not valid.  Column index must be between 1 and {0}.", Columns, iMove));
+            }
+            
             int m = iMove - 1;
+
 
             if (state.RowCount[m] == Rows) return null;  //column full.
 
@@ -55,6 +78,7 @@ namespace Connect4
             state.Values[m, (Rows - state.RowCount[m])] = state.Turn; //updates the board.
             state.Turn = (state.Turn == 1) ? 2 : 1; //switch player.
             state.MoveCount++;
+
             return state;
         }
 

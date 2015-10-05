@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Connect4.Interfaces.Players;
 
 namespace Connect4.Players
 {
-    internal class Computer : IPlayer
+    public class Computer : IPlayer
     {
         static int Rows = 6;
         static int Columns = 6;
         private int number;
         private int firstLevel = 0;
         public int CutOffLevel = 6;
-        public int[] Weights = new int[] { 1, 5, 100, 10000, 2, 6, 200, 15000 };
+        public int[] Weights = new int[] { 1, 2, 4, 8, 1, 2, 8, 16 };
 
-        internal Computer(int playerNumber)
+        public Computer(int playerNumber)
         {
             number = playerNumber;
         }
